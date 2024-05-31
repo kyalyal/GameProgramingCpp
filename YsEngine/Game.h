@@ -18,6 +18,7 @@ public:
 	Game();
 	bool Initialize();
 	void RunLoop();
+	void CreateSpriteVerts();
 	void Shutdown();
 
 	void AddActor(class Actor* actor);
@@ -51,7 +52,10 @@ private:
 	std::vector<class SpriteComponent*> mSprites;
 
 	SDL_Window* mWindow;
+
+	//콘텍스트: OpenGL이 인식하는 모든 상태, 오브젝트 포함하는 OpenGL의 세계.
 	SDL_GLContext mContext;
+
 	Uint32 mTicksCount;
 	bool mIsRunning;
 	// Track if we're updating actors right now

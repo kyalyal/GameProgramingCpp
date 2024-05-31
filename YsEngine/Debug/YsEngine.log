@@ -1,2 +1,9 @@
-﻿  VertexArray.cpp
-  YsEngine.vcxproj -> C:\Users\LG\Documents\GameProgramingCpp\Debug\YsEngine.exe
+﻿  Actor.cpp
+  Asteroid.cpp
+  Game.cpp
+  Laser.cpp
+  Main.cpp
+  Ship.cpp
+  SpriteComponent.cpp
+  코드를 생성하고 있습니다...
+  YsEngine.vcxproj -> C:\Users\USER\Documents\GameProgramingCpp\Debug\YsEngine.exe
