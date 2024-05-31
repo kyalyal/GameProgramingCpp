@@ -9,6 +9,7 @@
 #include "Game.h"
 #include <GL/glew.h>
 #include "SDL/SDL_image.h"
+#include "VertexArray.h"
 #include <algorithm>
 #include "Actor.h"
 #include "SpriteComponent.h"
@@ -284,7 +285,7 @@ void Game::CreateSpriteVerts()
 		2, 3, 0
 	};
 
-	//mSpriteVerts = new VertexArray(vertices, 4, indices, 6);
+	mSpriteVerts = new VertexArray(vertices, 4, indices, 6);
 
 }
 

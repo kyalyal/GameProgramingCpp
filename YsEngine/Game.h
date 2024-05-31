@@ -51,6 +51,10 @@ private:
 	// All the sprite components drawn
 	std::vector<class SpriteComponent*> mSprites;
 
+
+	class VertexArray* mSpriteVerts;
+
+
 	SDL_Window* mWindow;
 
 	//콘텍스트: OpenGL이 인식하는 모든 상태, 오브젝트 포함하는 OpenGL의 세계.
