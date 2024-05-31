@@ -1,0 +1,43 @@
+﻿  Actor.cpp
+  Asteroid.cpp
+  CircleComponent.cpp
+  Component.cpp
+  Game.cpp
+  InputComponent.cpp
+  Laser.cpp
+  Main.cpp
+  Math.cpp
+  MoveComponent.cpp
+  PhysicsComponent.cpp
+  Random.cpp
+  Ship.cpp
+  SpriteComponent.cpp
+  코드를 생성하고 있습니다...
+Game.obj : error LNK2019: SDL_GetError"public: bool __cdecl Game::Initialize(void)" (?Initialize@Game@@QEAA_NXZ) 함수에서 참조되는 확인할 수 없는 외부 기호
+Game.obj : error LNK2019: SDL_CreateWindow"public: bool __cdecl Game::Initialize(void)" (?Initialize@Game@@QEAA_NXZ) 함수에서 참조되는 확인할 수 없는 외부 기호
+Game.obj : error LNK2019: SDL_DestroyWindow"public: void __cdecl Game::Shutdown(void)" (?Shutdown@Game@@QEAAXXZ) 함수에서 참조되는 확인할 수 없는 외부 기호
+Game.obj : error LNK2019: SDL_GL_SetAttribute"public: bool __cdecl Game::Initialize(void)" (?Initialize@Game@@QEAA_NXZ) 함수에서 참조되는 확인할 수 없는 외부 기호
+Game.obj : error LNK2019: SDL_GL_CreateContext"public: bool __cdecl Game::Initialize(void)" (?Initialize@Game@@QEAA_NXZ) 함수에서 참조되는 확인할 수 없는 외부 기호
+Game.obj : error LNK2019: SDL_GL_SwapWindow"private: void __cdecl Game::GenerateOutput(void)" (?GenerateOutput@Game@@AEAAXXZ) 함수에서 참조되는 확인할 수 없는 외부 기호
+Game.obj : error LNK2019: SDL_GL_DeleteContext"public: void __cdecl Game::Shutdown(void)" (?Shutdown@Game@@QEAAXXZ) 함수에서 참조되는 확인할 수 없는 외부 기호
+Game.obj : error LNK2019: SDL_GetKeyboardState"private: void __cdecl Game::ProcessInput(void)" (?ProcessInput@Game@@AEAAXXZ) 함수에서 참조되는 확인할 수 없는 외부 기호
+Game.obj : error LNK2019: SDL_PollEvent"private: void __cdecl Game::ProcessInput(void)" (?ProcessInput@Game@@AEAAXXZ) 함수에서 참조되는 확인할 수 없는 외부 기호
+Game.obj : error LNK2019: SDL_Log"public: struct SDL_Texture * __cdecl Game::GetTexture(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > const &)" (?GetTexture@Game@@QEAAPEAUSDL_Texture@@AEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z) 함수에서 참조되는 확인할 수 없는 외부 기호
+Game.obj : error LNK2019: SDL_DestroyTexture"private: void __cdecl Game::UnloadData(void)" (?UnloadData@Game@@AEAAXXZ) 함수에서 참조되는 확인할 수 없는 외부 기호
+Game.obj : error LNK2019: SDL_GetTicks"public: bool __cdecl Game::Initialize(void)" (?Initialize@Game@@QEAA_NXZ) 함수에서 참조되는 확인할 수 없는 외부 기호
+Game.obj : error LNK2019: SDL_Init"public: bool __cdecl Game::Initialize(void)" (?Initialize@Game@@QEAA_NXZ) 함수에서 참조되는 확인할 수 없는 외부 기호
+Game.obj : error LNK2019: SDL_Quit"public: void __cdecl Game::Shutdown(void)" (?Shutdown@Game@@QEAAXXZ) 함수에서 참조되는 확인할 수 없는 외부 기호
+Game.obj : error LNK2019: __imp_glewInit"public: bool __cdecl Game::Initialize(void)" (?Initialize@Game@@QEAA_NXZ) 함수에서 참조되는 확인할 수 없는 외부 기호
+Game.obj : error LNK2019: IMG_Load"public: struct SDL_Texture * __cdecl Game::GetTexture(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > const &)" (?GetTexture@Game@@QEAAPEAUSDL_Texture@@AEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z) 함수에서 참조되는 확인할 수 없는 외부 기호
+Game.obj : error LNK2019: __imp_glewExperimental"public: bool __cdecl Game::Initialize(void)" (?Initialize@Game@@QEAA_NXZ) 함수에서 참조되는 확인할 수 없는 외부 기호
+SpriteComponent.obj : error LNK2019: SDL_QueryTexture"public: virtual void __cdecl SpriteComponent::SetTexture(struct SDL_Texture *)" (?SetTexture@SpriteComponent@@UEAAXPEAUSDL_Texture@@@Z) 함수에서 참조되는 확인할 수 없는 외부 기호
+SpriteComponent.obj : error LNK2019: SDL_RenderCopyEx"public: virtual void __cdecl SpriteComponent::Draw(struct SDL_Renderer *)" (?Draw@SpriteComponent@@UEAAXPEAUSDL_Renderer@@@Z) 함수에서 참조되는 확인할 수 없는 외부 기호
+MSVCRTD.lib(exe_main.obj) : error LNK2019: main"int __cdecl invoke_main(void)" (?invoke_main@@YAHXZ) 함수에서 참조되는 확인할 수 없는 외부 기호
+C:\External\SDL\lib\win\x86\SDL2.lib : warning LNK4272: 'x86' 라이브러리 컴퓨터 종류가 'x64' 대상 컴퓨터 종류와 충돌합니다.
+C:\External\SDL\lib\win\x86\SDL2main.lib : warning LNK4272: 'x86' 라이브러리 컴퓨터 종류가 'x64' 대상 컴퓨터 종류와 충돌합니다.
+C:\External\SDL\lib\win\x86\SDL2_image.lib : warning LNK4272: 'x86' 라이브러리 컴퓨터 종류가 'x64' 대상 컴퓨터 종류와 충돌합니다.
+C:\External\SDL\lib\win\x86\SDL2_ttf.lib : warning LNK4272: 'x86' 라이브러리 컴퓨터 종류가 'x64' 대상 컴퓨터 종류와 충돌합니다.
+C:\External\SDL\lib\win\x86\SDL2_mixer.lib : warning LNK4272: 'x86' 라이브러리 컴퓨터 종류가 'x64' 대상 컴퓨터 종류와 충돌합니다.
+C:\External\GLEW\lib\win\x86\glew32.lib : warning LNK4272: 'x86' 라이브러리 컴퓨터 종류가 'x64' 대상 컴퓨터 종류와 충돌합니다.
+C:\External\SOIL\lib\win\x86\SOIL.lib : warning LNK4272: 'x86' 라이브러리 컴퓨터 종류가 'x64' 대상 컴퓨터 종류와 충돌합니다.
+C:\Users\USER\source\repos\YsEngine\x64\Debug\YsEngine.exe : fatal error LNK1120: 20개의 확인할 수 없는 외부 참조입니다.
