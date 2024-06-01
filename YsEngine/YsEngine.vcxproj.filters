@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Shaders">
+      <UniqueIdentifier>{2f581c5c-2940-4d60-9181-dc771d642d69}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Actor.cpp">
@@ -60,6 +63,12 @@
     <ClCompile Include="VertexArray.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="Shader.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Actor.h">
@@ -104,5 +113,28 @@
     <ClInclude Include="VertexArray.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="Shader.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Basic.vert">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Basic.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Sprite.vert">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Sprite.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Transform.vert">
+      <Filter>Shaders</Filter>
+    </None>
   </ItemGroup>
 </Project>

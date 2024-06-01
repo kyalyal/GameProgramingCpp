@@ -1,19 +1,2 @@
-﻿  Actor.cpp
-C:\Users\LG\Documents\GameProgramingCpp\YsEngine\Game.h(1,1): warning C4819: 현재 코드 페이지(949)에서 표시할 수 없는 문자가 파일에 들어 있습니다. 데이터가 손실되지 않게 하려면 해당 파일을 유니코드 형식으로 저장하십시오.
-  Asteroid.cpp
-C:\Users\LG\Documents\GameProgramingCpp\YsEngine\PhysicsComponent.h(1,1): warning C4819: 현재 코드 페이지(949)에서 표시할 수 없는 문자가 파일에 들어 있습니다. 데이터가 손실되지 않게 하려면 해당 파일을 유니코드 형식으로 저장하십시오.
-C:\Users\LG\Documents\GameProgramingCpp\YsEngine\Game.h(1,1): warning C4819: 현재 코드 페이지(949)에서 표시할 수 없는 문자가 파일에 들어 있습니다. 데이터가 손실되지 않게 하려면 해당 파일을 유니코드 형식으로 저장하십시오.
-  Game.cpp
-C:\Users\LG\Documents\GameProgramingCpp\YsEngine\Game.cpp(1,1): warning C4819: 현재 코드 페이지(949)에서 표시할 수 없는 문자가 파일에 들어 있습니다. 데이터가 손실되지 않게 하려면 해당 파일을 유니코드 형식으로 저장하십시오.
-C:\Users\LG\Documents\GameProgramingCpp\YsEngine\Game.h(1,1): warning C4819: 현재 코드 페이지(949)에서 표시할 수 없는 문자가 파일에 들어 있습니다. 데이터가 손실되지 않게 하려면 해당 파일을 유니코드 형식으로 저장하십시오.
-  Laser.cpp
-C:\Users\LG\Documents\GameProgramingCpp\YsEngine\Game.h(1,1): warning C4819: 현재 코드 페이지(949)에서 표시할 수 없는 문자가 파일에 들어 있습니다. 데이터가 손실되지 않게 하려면 해당 파일을 유니코드 형식으로 저장하십시오.
-  Main.cpp
-C:\Users\LG\Documents\GameProgramingCpp\YsEngine\Game.h(1,1): warning C4819: 현재 코드 페이지(949)에서 표시할 수 없는 문자가 파일에 들어 있습니다. 데이터가 손실되지 않게 하려면 해당 파일을 유니코드 형식으로 저장하십시오.
-  Ship.cpp
-C:\Users\LG\Documents\GameProgramingCpp\YsEngine\Game.h(1,1): warning C4819: 현재 코드 페이지(949)에서 표시할 수 없는 문자가 파일에 들어 있습니다. 데이터가 손실되지 않게 하려면 해당 파일을 유니코드 형식으로 저장하십시오.
-  SpriteComponent.cpp
-C:\Users\LG\Documents\GameProgramingCpp\YsEngine\Game.h(1,1): warning C4819: 현재 코드 페이지(949)에서 표시할 수 없는 문자가 파일에 들어 있습니다. 데이터가 손실되지 않게 하려면 해당 파일을 유니코드 형식으로 저장하십시오.
-  VertexArray.cpp
-  코드를 생성하고 있습니다...
+﻿  Game.cpp
   YsEngine.vcxproj -> C:\Users\LG\Documents\GameProgramingCpp\Debug\YsEngine.exe

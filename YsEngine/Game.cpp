@@ -8,78 +8,87 @@
 
 #include "Game.h"
 #include <GL/glew.h>
-#include "SDL/SDL_image.h"
+#include "Texture.h"
 #include "VertexArray.h"
+#include "Shader.h"
 #include <algorithm>
 #include "Actor.h"
 #include "SpriteComponent.h"
+#include "Actor.h"
 #include "Ship.h"
 #include "Asteroid.h"
 #include "Random.h"
 
 Game::Game()
-:mWindow(nullptr)
-,mIsRunning(true)
-,mUpdatingActors(false)
+	:mWindow(nullptr)
+	, mSpriteShader(nullptr)
+	, mIsRunning(true)
+	, mUpdatingActors(false)
 {
-	mEnemyCoolDown = 5.f;
+
 }
 
 bool Game::Initialize()
 {
-	if (SDL_Init(SDL_INIT_VIDEO|SDL_INIT_AUDIO) != 0)
+	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) != 0)
 	{
 		SDL_Log("Unable to initialize SDL: %s", SDL_GetError());
 		return false;
 	}
-	
 
-	//OPENGL
-
-	//코어 OpenGL 사용하겠다.
+	// Set OpenGL attributes
+	// Use the core OpenGL profile
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
-
-	//3.3버전 지정
+	// Specify version 3.3
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
-
-	//RGBA 채널마다 8비트 크기인 색상 버퍼 요청
+	// Request a color buffer with 8-bits per RGBA channel
 	SDL_GL_SetAttribute(SDL_GL_RED_SIZE, 8);
 	SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE, 8);
 	SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE, 8);
 	SDL_GL_SetAttribute(SDL_GL_ALPHA_SIZE, 8);
-
-	//더블 버퍼링 활성화
+	// Enable double buffering
 	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
-
-	//OpenGL이 하드웨어 가속을 사용하도록 강제
+	// Force OpenGL to use hardware acceleration
 	SDL_GL_SetAttribute(SDL_GL_ACCELERATED_VISUAL, 1);
 
-
-	mWindow = SDL_CreateWindow("Game Programming in C++ (Chapter 1)", 100, 100, 1024, 768, SDL_WINDOW_OPENGL);
+	mWindow = SDL_CreateWindow("Game Programming in C++ (Chapter 5)", 100, 100,
+		1024, 768, SDL_WINDOW_OPENGL);
 	if (!mWindow)
 	{
 		SDL_Log("Failed to create window: %s", SDL_GetError());
 		return false;
 	}
-	
 
+	// Create an OpenGL context
 	mContext = SDL_GL_CreateContext(mWindow);
+
+	// Initialize GLEW
 	glewExperimental = GL_TRUE;
 	if (glewInit() != GLEW_OK)
 	{
-		SDL_Log("GLEW Init 실패");
+		SDL_Log("Failed to initialize GLEW.");
 		return false;
 	}
 
+	// On some platforms, GLEW will emit a benign error code,
+	// so clear it
 	glGetError();
 
+	// Make sure we can create/compile shaders
+	if (!LoadShaders())
+	{
+		SDL_Log("Failed to load shaders.");
+		return false;
+	}
+
+	// Create quad for drawing sprites
 	CreateSpriteVerts();
 
 	LoadData();
 
 	mTicksCount = SDL_GetTicks();
-	
+
 	return true;
 }
 
@@ -100,12 +109,12 @@ void Game::ProcessInput()
 	{
 		switch (event.type)
 		{
-			case SDL_QUIT:
-				mIsRunning = false;
-				break;
+		case SDL_QUIT:
+			mIsRunning = false;
+			break;
 		}
 	}
-	
+
 	const Uint8* keyState = SDL_GetKeyboardState(NULL);
 	if (keyState[SDL_SCANCODE_ESCAPE])
 	{
@@ -134,16 +143,6 @@ void Game::UpdateGame()
 	}
 	mTicksCount = SDL_GetTicks();
 
-	//행성이 시간차로 나오도록
-
-	mEnemyCoolDown -= deltaTime;
-	if (mEnemyCoolDown < 0.f)
-	{
-		new Asteroid(this);
-		mEnemyCoolDown = 0.5f;
-	}
-
-
 	// Update all actors
 	mUpdatingActors = true;
 	for (auto actor : mActors)
@@ -155,6 +154,7 @@ void Game::UpdateGame()
 	// Move any pending actors to mActors
 	for (auto pending : mPendingActors)
 	{
+		pending->ComputeWorldTransform();
 		mActors.emplace_back(pending);
 	}
 	mPendingActors.clear();
@@ -178,27 +178,68 @@ void Game::UpdateGame()
 
 void Game::GenerateOutput()
 {
-	
-
-
-	glClearColor(0.86f, 0.86f, 0.86f, 1.f);
+	// Set the clear color to grey
+	glClearColor(0.86f, 0.86f, 0.86f, 1.0f);
+	// Clear the color buffer
 	glClear(GL_COLOR_BUFFER_BIT);
+
+	// Draw all sprite components
+	// Enable alpha blending on the color buffer
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+	// Set shader/vao as active
+	mSpriteShader->SetActive();
+	mSpriteVerts->SetActive();
+	for (auto sprite : mSprites)
+	{
+		sprite->Draw(mSpriteShader);
+	}
+
+	// Swap the buffers
 	SDL_GL_SwapWindow(mWindow);
 }
 
+bool Game::LoadShaders()
+{
+	mSpriteShader = new Shader();
+	if (!mSpriteShader->Load("Shaders/Sprite.vert", "Shaders/Sprite.frag"))
+	{
+		return false;
+	}
 
-//스폰하는 부분
+	mSpriteShader->SetActive();
+	// Set the view-projection matrix
+	Matrix4 viewProj = Matrix4::CreateSimpleViewProj(1024.f, 768.f);
+	mSpriteShader->SetMatrixUniform("uViewProj", viewProj);
+	return true;
+}
+
+void Game::CreateSpriteVerts()
+{
+	float vertices[] = {
+		-0.5f,  0.5f, 0.f, 0.f, 0.f, // top left
+		 0.5f,  0.5f, 0.f, 1.f, 0.f, // top right
+		 0.5f, -0.5f, 0.f, 1.f, 1.f, // bottom right
+		-0.5f, -0.5f, 0.f, 0.f, 1.f  // bottom left
+	};
+
+	unsigned int indices[] = {
+		0, 1, 2,
+		2, 3, 0
+	};
+
+	mSpriteVerts = new VertexArray(vertices, 4, indices, 6);
+}
+
 void Game::LoadData()
 {
 	// Create player's ship
 	mShip = new Ship(this);
-	mShip->SetPosition(Vector2(512.0f, 384.0f));
 	mShip->SetRotation(Math::PiOver2);
 
 	// Create asteroids
-	const int numAsteroids = 1;
+	const int numAsteroids = 20;
 	for (int i = 0; i < numAsteroids; i++)
 	{
 		new Asteroid(this);
@@ -217,15 +258,15 @@ void Game::UnloadData()
 	// Destroy textures
 	for (auto i : mTextures)
 	{
-		SDL_DestroyTexture(i.second);
+		i.second->Unload();
+		delete i.second;
 	}
 	mTextures.clear();
 }
 
-SDL_Texture* Game::GetTexture(const std::string& fileName)
+Texture* Game::GetTexture(const std::string& fileName)
 {
-	SDL_Texture* tex = nullptr;
-	// Is the texture already in the map?
+	Texture* tex = nullptr;
 	auto iter = mTextures.find(fileName);
 	if (iter != mTextures.end())
 	{
@@ -233,24 +274,16 @@ SDL_Texture* Game::GetTexture(const std::string& fileName)
 	}
 	else
 	{
-		// Load from file
-		SDL_Surface* surf = IMG_Load(fileName.c_str());
-		if (!surf)
+		tex = new Texture();
+		if (tex->Load(fileName))
 		{
-			SDL_Log("Failed to load texture file %s", fileName.c_str());
-			return nullptr;
+			mTextures.emplace(fileName, tex);
 		}
-
-		//// Create texture from surface
-		//tex = SDL_CreateTextureFromSurface(mRenderer, surf);
-		//SDL_FreeSurface(surf);
-		//if (!tex)
-		//{
-		//	SDL_Log("Failed to convert surface to texture for %s", fileName.c_str());
-		//	return nullptr;
-		//}
-
-		mTextures.emplace(fileName.c_str(), tex);
+		else
+		{
+			delete tex;
+			tex = nullptr;
+		}
 	}
 	return tex;
 }
@@ -270,28 +303,12 @@ void Game::RemoveAsteroid(Asteroid* ast)
 	}
 }
 
-
-void Game::CreateSpriteVerts()
-{
-	float vertices[] = {
-		-0.5f,  0.5f, 0.f, // top left
-		 0.5f,  0.5f, 0.f, // top right
-		 0.5f, -0.5f, 0.f, // bottom right
-		- 0.5f, -0.5f, 0.f // bottom left
-	};
-
-	unsigned int indices[] = {
-		0, 1, 2,
-		2, 3, 0
-	};
-
-	mSpriteVerts = new VertexArray(vertices, 4, indices, 6);
-
-}
-
 void Game::Shutdown()
 {
 	UnloadData();
+	delete mSpriteVerts;
+	mSpriteShader->Unload();
+	delete mSpriteShader;
 	SDL_GL_DeleteContext(mContext);
 	SDL_DestroyWindow(mWindow);
 	SDL_Quit();
@@ -337,7 +354,7 @@ void Game::AddSprite(SpriteComponent* sprite)
 	// (The first element with a higher draw order than me)
 	int myDrawOrder = sprite->GetDrawOrder();
 	auto iter = mSprites.begin();
-	for ( ;
+	for (;
 		iter != mSprites.end();
 		++iter)
 	{
@@ -353,7 +370,6 @@ void Game::AddSprite(SpriteComponent* sprite)
 
 void Game::RemoveSprite(SpriteComponent* sprite)
 {
-	// (We can't swap because it ruins ordering)
 	auto iter = std::find(mSprites.begin(), mSprites.end(), sprite);
 	mSprites.erase(iter);
 }
